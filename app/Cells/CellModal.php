@@ -21,4 +21,9 @@ class CellModal extends Cell
             "tipe" => $this->tipeKiriman
         ]);
     }
+
+    protected function HeaderAll()
+    {
+        return model('Hmenus')->where('active', 1)->findAll();
+    }
 }

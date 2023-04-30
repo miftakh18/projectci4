@@ -4,17 +4,18 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Hmenus extends Model
+
+class Menu extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'hmenu';
-    protected $primaryKey       = 'hid';
+    protected $table            = 'menu';
+    protected $primaryKey       = 'mid';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nama_head', 'deskripsi', 'urutan', 'active'];
+    protected $allowedFields    = ['hid', 'nama_menu', 'href', 'icon', 'deskripsi', 'urutan', 'active'];
 
     // Dates
     protected $useTimestamps = false;

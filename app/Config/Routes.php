@@ -38,9 +38,20 @@ $routes->get('/', 'Pages::index');
 $routes->get('pages', [Pages::class, 'index']);
 $routes->get('(:segment)', [Pages::class, 'view']);
 
+$routes->group('hmenu', static function ($routes) {
+    $routes->get('show', 'CtrHmenu::index');
+    $routes->post('create', 'CtrHmenu::add');
+    $routes->get('edit/(:any)', 'CtrHmenu::edit/$1');
+    $routes->post('update/(:any)', 'CtrHmenu::update/$1');
+});
 
-$routes->get('hmenu/show', 'CtrHmenu::index');
-$routes->post('hmenu/create', 'CtrHmenu::tambahHeader');
+
+$routes->group('menu', static function ($routes) {
+    $routes->get('show', 'CtrMenu::index');
+    $routes->post('create', 'CtrMenu::add');
+    $routes->get('edit/(:any)', 'CtrMenu::edit/$1');
+    $routes->post('update/(:any)', 'CtrMenu::update/$1');
+});
 /*
  * --------------------------------------------------------------------
  * Additional Routing

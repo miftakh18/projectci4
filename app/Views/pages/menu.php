@@ -1,6 +1,6 @@
 <?= $this->extend('layout/main') ?>
 <?= $this->section('content'); ?>
-<h1>Header Menu</h1>
+<h1>Menu</h1>
 <div class="row">
     <!-- Area Chart -->
     <div class="col-xl-12 col-lg-12">
@@ -8,7 +8,7 @@
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">
 
-                    <button type="button" class="btn btn-primary btn-icon-split" id="tambahmn" data-toggle="modal" data-target="#addhmenus">
+                    <button type="button" class="btn btn-primary btn-icon-split" id="tambahmn" data-toggle="modal" data-target="#addmenu">
                         <span class="icon text-white-50">
                             <i class="fas fa-plus-circle"></i>
                         </span>
@@ -19,11 +19,14 @@
                 </h6>
             </div>
             <div class="card-body table-responsive">
-                <table class="table table-striped " width="100%" id="hmenus">
+                <table class="table table-striped " width="100%" id="menus">
                     <thead>
                         <th>No.</th>
                         <th>Nama</th>
-                        <th width="50%">Deskripsi</th>
+                        <th>Header</th>
+                        <th>Link</th>
+                        <th>Icon</th>
+                        <th>Deskripsi</th>
                         <th>Urutan</th>
                         <th>Active</th>
 
@@ -40,11 +43,11 @@
 <!-- Modal -->
 <!-- tambah Modal -->
 <!-- lokasi cek view_cell = app/Cells -->
-<?= view_cell('CellModal::TarikModal', ["idhtml" => "addhmenus", "idform" => "addHeader", "nama_modal" => "hmenu", "tipeKiriman" => "add"]); ?>
+<?= view_cell('CellModal::TarikModal', ["idhtml" => "addmenu", "idform" => "addMenu", "nama_modal" => "menu", "tipeKiriman" => "add"]); ?>
 <!-- tutup tambah Modal -->
 
 <!-- edit Modal -->
-<?= view_cell('CellModal::TarikModal', ["idhtml" => "edithmenus", "idform" => "editHeader", "nama_modal" => "hmenu", "tipeKiriman" => "edit"]); ?>
+<?= view_cell('CellModal::TarikModal', ["idhtml" => "editmenu", "idform" => "editMenu", "nama_modal" => "menu", "tipeKiriman" => "edit"]); ?>
 <!-- tutup edit Modal -->
 <!-- celling plugin JS -->
 <?= view_cell('PanggilPluginAll::pluginJS'); ?>
@@ -53,13 +56,22 @@
     $(document).ready(function() {
         isi = {
             'ajax': {
-                url: '<?= base_url(); ?>hmenu/show',
+                url: '<?= base_url(); ?>menu/show',
                 dataSrc: 'data'
             },
             columns: [{
                     data: 'nomor'
                 }, {
-                    data: 'nama_head'
+                    data: 'nama_menu'
+                },
+                {
+                    data: 'header'
+                },
+                {
+                    data: 'href'
+                },
+                {
+                    data: 'icon'
                 }, {
                     data: 'deskripsi'
                 }, {
@@ -75,22 +87,22 @@
                 {
                     data: null,
                     render: function(data, type, row) {
-                        btn = '<button type="button" id="edithmn" data-target="#edithmenus" data-toggle="modal" class="btn btn-sm shadow btn-primary mx-2" title="edit" data-idhmn="' + data.hid + '" ><i class="far fa-edit" ></i></button>';
+                        btn = '<button type="button" id="edithmn" data-target="#editmenu" data-toggle="modal" class="btn btn-sm shadow btn-primary mx-2" title="edit" data-idhmn="' + data.hid + '" ><i class="far fa-edit" ></i></button>';
 
                         return btn;
                     }
                 }
             ]
         }
-        table = $("#hmenus").DataTable(isi);
+        table = $("#menus").DataTable(isi);
 
     })
 
-    $("#addHeader").submit(function(e) {
+    $("#addMenu").submit(function(e) {
         e.preventDefault();
         var form = $(this).serialize();
         $.ajax({
-            url: '<?= base_url(); ?>hmenu/create',
+            url: '<?= base_url(); ?>menu/create',
             type: 'POST',
             data: form,
             dataType: 'json',
@@ -105,8 +117,8 @@
 
                     table.ajax.reload();
 
-                    $("#addhmenus").modal('hide');
-                    $("#addHeader")[0].reset();
+                    $("#addmenu").modal('hide');
+                    $("#addMenu")[0].reset();
 
                 } else {
                     Swal.fire({
@@ -121,11 +133,11 @@
     })
 
     $(document).on("click", "#edithmn", function() {
-        $("#addHeader")[0].reset();
+        $("#addmenu")[0].reset();
         id = $(this).data('idhmn');
         $("#id_editHeader").val(id);
         $.ajax({
-            url: '<?= base_url(); ?>hmenu/edit/' + id,
+            url: '<?= base_url(); ?>menu/edit/' + id,
             type: 'GET',
             dataType: 'json',
             success: function(res) {
@@ -139,12 +151,12 @@
         })
     })
     $(document).on("click", "#tambahmn", function() {
-        $("#addHeader")[0].reset();
+        $("#addMenu")[0].reset();
 
     })
 
 
-    $("#editHeader").submit(function(e) {
+    $("#editMenu").submit(function(e) {
         e.preventDefault();
         var form = $(this).serialize();
         $("#id_editHeader").val(id);
