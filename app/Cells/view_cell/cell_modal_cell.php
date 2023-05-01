@@ -76,9 +76,9 @@
                             <?php elseif (strtolower($tipe)  == 'add') : ?>
                                 Tambah
                             <?php endif ?>
-                            Header
+                            Menu
                             <?php if (strtolower($tipe)  == 'edit') : ?>
-                                <input type="hidden" id="id_<?= $idform; ?>">
+                                <input type="text" id="id_ed">
                             <?php endif ?>
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -121,11 +121,11 @@
                                 <label for="">Aktif </label>
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="aktif" id="ON" value="1">
+                                        <input class="form-check-input" type="radio" name="active" id="ON" value="1">
                                         <label class="form-check-label" for="ON">ON</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="aktif" id="OFF" value="0">
+                                        <input class="form-check-input" type="radio" name="active" id="OFF" value="0">
                                         <label class="form-check-label" for="OFF">OFF</label>
                                     </div>
                                 </div>

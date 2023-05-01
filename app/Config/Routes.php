@@ -45,7 +45,6 @@ $routes->group('hmenu', static function ($routes) {
     $routes->post('update/(:any)', 'CtrHmenu::update/$1');
 });
 
-
 $routes->group('menu', static function ($routes) {
     $routes->get('show', 'CtrMenu::index');
     $routes->post('create', 'CtrMenu::add');

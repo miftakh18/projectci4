@@ -22,6 +22,9 @@ class Pages extends BaseController
             case 'hmenu':
                 $data['title'] = ucfirst('Header menu');
                 break;
+            case 'smenu':
+                $data['title'] = ucfirst('Sub menu');
+                break;
             default:
                 $data['title'] = ucfirst($page);
                 break;

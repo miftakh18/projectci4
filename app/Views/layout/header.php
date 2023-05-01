@@ -59,6 +59,7 @@
                         <h6 class="collapse-header">Custom Components:</h6>
                         <a class="collapse-item" href="/hmenu">Header Menu</a>
                         <a class="collapse-item" href="/menu">Menu</a>
+                        <a class="collapse-item" href="/smenu">Sub Menu</a>
                     </div>
                 </div>
             </li>
