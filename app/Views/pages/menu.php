@@ -106,6 +106,15 @@
             type: 'POST',
             data: form,
             dataType: 'json',
+            beforeSend: function() {
+                swal.fire({
+                    title: 'Loading......',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading()
+                    }
+                })
+            },
             success: function(res) {
                 if (res.icon == 'success') {
                     Swal.fire({
@@ -169,6 +178,15 @@
             type: 'POST',
             data: form,
             dataType: 'json',
+            beforeSend: function() {
+                swal.fire({
+                    title: 'Loading......',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading()
+                    }
+                })
+            },
             success: function(res) {
                 if (res.icon == 'success') {
                     Swal.fire({

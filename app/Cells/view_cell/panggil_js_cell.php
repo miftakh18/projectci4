@@ -17,5 +17,5 @@
 <script src="<?= base_url('assets/'); ?>vendor/sweetalert2/sweetalert2.all.min.js"></script>
 
 <!-- Page level custom scripts -->
-<!-- <script src="<?= base_url('assets/'); ?>js/demo/chart-area-demo.js"></script> -->
+<script src="<?= base_url('assets/'); ?>vendor/select2/select2.min.js"></script>
 <!-- <script src="<?= base_url('assets/'); ?>js/demo/chart-pie-demo.js"></script> -->

@@ -51,6 +51,15 @@ $routes->group('menu', static function ($routes) {
     $routes->get('edit/(:any)', 'CtrMenu::edit/$1');
     $routes->post('update/(:any)', 'CtrMenu::update/$1');
 });
+
+$routes->group('smenu', static function ($routes) {
+    $routes->get('show', 'CtrSubmenu::index');
+    $routes->post('create', 'CtrSubmenu::add');
+    $routes->get('edit/(:any)', 'CtrSubmenu::edit/$1');
+    $routes->get('menus/(:any)', 'CtrSubmenu::menus/$1');
+    $routes->get('menus/', 'CtrSubmenu::menus');
+    $routes->post('update/(:any)', 'CtrSubmenu::update/$1');
+});
 /*
  * --------------------------------------------------------------------
  * Additional Routing

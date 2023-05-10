@@ -14,7 +14,7 @@ class Smenu extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['mid', 'hid', 'nama_submenu', 'href', 'deskripsi', 'urutan', 'active'];
+    protected $allowedFields    = ['hid', 'mid', 'nama_submenu', 'href', 'deskripsi', 'urutan', 'active'];
 
     // Dates
     protected $useTimestamps = false;

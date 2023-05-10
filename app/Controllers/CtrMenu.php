@@ -62,14 +62,8 @@ class CtrMenu extends BaseController
     }
     public function update($id  = null)
     {
-
-
-
         $update  = $this->request->getPost();
-
         $sql =   $this->menu->update($id, $update);
-
-
         if ($sql == false) {
             $output["msg"] = "Data gagal Di Update";
             $output["icon"] = "error";

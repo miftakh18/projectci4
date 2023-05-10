@@ -1,6 +1,6 @@
 <?= $this->extend('layout/main') ?>
 <?= $this->section('content'); ?>
-<h1>Menu</h1>
+<h1> Sub Menu</h1>
 <div class="row">
     <!-- Area Chart -->
     <div class="col-xl-12 col-lg-12">
@@ -8,7 +8,7 @@
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">
 
-                    <button type="button" class="btn btn-primary btn-icon-split" id="tambahmn" data-toggle="modal" data-target="#addmenu">
+                    <button type="button" class="btn btn-primary btn-icon-split" id="tambahmn" data-toggle="modal" data-target="#addsmenu">
                         <span class="icon text-white-50">
                             <i class="fas fa-plus-circle"></i>
                         </span>
@@ -19,13 +19,13 @@
                 </h6>
             </div>
             <div class="card-body table-responsive">
-                <table class="table table-striped " width="100%" id="menus">
+                <table class="table table-striped " width="100%" id="smenus">
                     <thead>
                         <th>No.</th>
                         <th>Nama</th>
                         <th>Header</th>
+                        <th>Menu</th>
                         <th>Link</th>
-                        <th>Icon</th>
                         <th>Deskripsi</th>
                         <th>Urutan</th>
                         <th>Active</th>
@@ -43,11 +43,11 @@
 <!-- Modal -->
 <!-- tambah Modal -->
 <!-- lokasi cek view_cell = app/Cells -->
-<?= view_cell('CellModal::TarikModal', ["idhtml" => "addmenu", "idform" => "addMenu", "nama_modal" => "menu", "tipeKiriman" => "add"]); ?>
+<?= view_cell('CellModal::TarikModal', ["idhtml" => "addsmenu", "idform" => "addSMenu", "nama_modal" => "smenu", "tipeKiriman" => "add"]); ?>
 <!-- tutup tambah Modal -->
 
 <!-- edit Modal -->
-<?= view_cell('CellModal::TarikModal', ["idhtml" => "editmenu", "idform" => "editMenu", "nama_modal" => "menu", "tipeKiriman" => "edit"]); ?>
+<?= view_cell('CellModal::TarikModal', ["idhtml" => "editsmenu", "idform" => "editSMenu", "nama_modal" => "smenu", "tipeKiriman" => "edit"]); ?>
 <!-- tutup edit Modal -->
 <!-- celling plugin JS -->
 <?= view_cell('PanggilPluginAll::pluginJS'); ?>
@@ -56,23 +56,23 @@
     $(document).ready(function() {
         isi = {
             'ajax': {
-                url: '<?= base_url(); ?>menu/show',
+                url: '<?= base_url(); ?>smenu/show',
                 dataSrc: 'data'
             },
             columns: [{
                     data: 'nomor'
                 }, {
-                    data: 'nama_menu'
+                    data: 'nama_submenu'
                 },
                 {
                     data: 'header'
+                }, {
+                    data: 'menu'
                 },
                 {
                     data: 'href'
                 },
                 {
-                    data: 'icon'
-                }, {
                     data: 'deskripsi'
                 }, {
 
@@ -87,25 +87,34 @@
                 {
                     data: null,
                     render: function(data, type, row) {
-                        btn = '<button type="button" id="edithmn" data-target="#editmenu" data-toggle="modal" class="btn btn-sm shadow btn-primary mx-2" title="edit" data-idmn="' + data.mid + '" ><i class="far fa-edit" ></i></button>';
+                        btn = '<button type="button" id="editsmn" data-target="#editsmenu" data-toggle="modal" class="btn btn-sm shadow btn-primary mx-2" title="edit" data-idsmn="' + data.smid + '" data-idhid="' + data.hid + '" ><i class="far fa-edit" ></i></button>';
 
                         return btn;
                     }
                 }
             ]
         }
-        table = $("#menus").DataTable(isi);
+        table = $("#smenus").DataTable(isi);
 
     })
 
-    $("#addMenu").submit(function(e) {
+    $("#addSMenu").submit(function(e) {
         e.preventDefault();
         var form = $(this).serialize();
         $.ajax({
-            url: '<?= base_url(); ?>menu/create',
+            url: '<?= base_url(); ?>smenu/create',
             type: 'POST',
             data: form,
             dataType: 'json',
+            beforeSend: function() {
+                swal.fire({
+                    title: 'Loading......',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading()
+                    }
+                })
+            },
             success: function(res) {
                 if (res.icon == 'success') {
                     Swal.fire({
@@ -117,8 +126,8 @@
 
                     table.ajax.reload();
 
-                    $("#addmenu").modal('hide');
-                    $("#addMenu")[0].reset();
+                    $("#addsmenu").modal('hide');
+                    $("#addSMenu")[0].reset();
 
                 } else {
                     Swal.fire({
@@ -131,20 +140,53 @@
             }
         })
     })
-
-    $(document).on("click", "#edithmn", function() {
-        $("#addMenu")[0].reset();
-        id = $(this).data('idmn');
-        $("#id_ed").val(id);
+    $(document).on('change', '.addSMenu', function() {
+        vals = $(this).val();
         $.ajax({
-            url: '<?= base_url(); ?>menu/edit/' + id,
+            url: '<?= base_url(); ?>smenu/menus/' + vals,
             type: 'GET',
             dataType: 'json',
+            beforeSend: function() {
+                $('.loadaddSMenu').html('Loading.....');
+            },
             success: function(res) {
-                // alert(res.data.nama_head);
-                // $("#nmheader").val(res.data.nama_head);
-                $("select#hid").val(res.data.hid);
-                $("input#nama_menu").val(res.data.nama_menu);
+                $('.loadaddSMenu').html('');
+
+                $('.midaddSMenu').html(res.html);
+            }
+        })
+    })
+    $(document).on('change', '.editSMenu', function() {
+        vals = $(this).val();
+        $.ajax({
+            url: '<?= base_url(); ?>smenu/menus/' + vals,
+            type: 'GET',
+            dataType: 'json',
+            beforeSend: function() {
+                $('.loadeditSMenu').html('Loading.....');
+            },
+            success: function(res) {
+                $('.loadeditSMenu').html('');
+
+                $('.mideditSMenu').html(res.html);
+            }
+        })
+    })
+
+    $(document).on("click", "#editsmn", function() {
+        $("#addSMenu")[0].reset();
+        id = $(this).data('idsmn');
+        idh = $(this).data('idhid');
+        $("#id_ed").val(id);
+        $(".editSMenu").val(idh).trigger('change');
+        $.ajax({
+            url: '<?= base_url(); ?>smenu/edit/' + id,
+            type: 'GET',
+            dataType: 'json',
+
+            success: function(res) {
+                $(".mideditSMenu").val(res.data.mid);
+                $("input#nama_submenu").val(res.data.nama_submenu);
                 $("input#href").val(res.data.href);
                 $("input#icon").val(res.data.icon);
                 $("textarea#deskripsi").val(res.data.deskripsi);
@@ -154,21 +196,30 @@
         })
     })
     $(document).on("click", "#tambahmn", function() {
-        $("#addMenu")[0].reset();
+        $("#addSMenu")[0].reset();
 
     })
 
 
-    $("#editMenu").submit(function(e) {
+    $("#editSMenu").submit(function(e) {
         e.preventDefault();
         var form = $(this).serialize();
         $("#id_ed").val(id);
 
         $.ajax({
-            url: '<?= base_url(); ?>menu/update/' + id,
+            url: '<?= base_url(); ?>smenu/update/' + id,
             type: 'POST',
             data: form,
             dataType: 'json',
+            beforeSend: function() {
+                swal.fire({
+                    title: 'Loading......',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading()
+                    }
+                })
+            },
             success: function(res) {
                 if (res.icon == 'success') {
                     Swal.fire({
@@ -180,8 +231,8 @@
 
                     table.ajax.reload();
 
-                    $("#editmenu").modal('hide');
-                    $("#editMenu")[0].reset();
+                    $("#editsmenu").modal('hide');
+                    $("#editSMenu")[0].reset();
 
                 } else {
                     Swal.fire({

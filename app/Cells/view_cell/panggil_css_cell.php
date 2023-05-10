@@ -6,3 +6,4 @@
    <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
    <link rel="stylesheet" href="<?= base_url('assets/'); ?>vendor/datatables/dataTables.bootstrap4.min.css">
    <link rel="stylesheet" href="<?= base_url('assets/'); ?>vendor/sweetalert2/sweetalert2.min.css">
+   <link rel="stylesheet" href="<?= base_url('assets/'); ?>vendor/select2/select2.min.css">
