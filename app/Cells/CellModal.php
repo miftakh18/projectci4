@@ -24,6 +24,8 @@ class CellModal extends Cell
 
     protected function HeaderAll()
     {
+
+
         return model('Hmenus')->where('active', 1)->findAll();
     }
 }

@@ -1,5 +1,6 @@
 <!-- Bootstrap core JavaScript-->
-<script src="<?= base_url('assets/'); ?>plugin/jquery/jquery.min.js"></script>
+<!-- <script src="<?= base_url('assets/'); ?>plugin/jquery/jquery.min.js"></script> -->
+<script src="<?= base_url('assets/'); ?>plugin/jquery/jquery7.min.js"></script>
 <script src="<?= base_url('assets/'); ?>plugin/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
