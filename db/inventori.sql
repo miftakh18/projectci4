@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 10 Bulan Mei 2023 pada 15.19
--- Versi server: 10.4.28-MariaDB
--- Versi PHP: 8.2.4
+-- Waktu pembuatan: 21 Bulan Mei 2023 pada 14.31
+-- Versi server: 10.4.27-MariaDB
+-- Versi PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,31 @@ SET time_zone = "+00:00";
 --
 -- Database: `inventori`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `detail_list_barang`
+--
+
+CREATE TABLE `detail_list_barang` (
+  `dbid` int(10) UNSIGNED NOT NULL,
+  `mbid` int(11) DEFAULT NULL,
+  `nama_barang` varchar(100) DEFAULT NULL,
+  `jumlah` int(11) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data untuk tabel `detail_list_barang`
+--
+
+INSERT INTO `detail_list_barang` (`dbid`, `mbid`, `nama_barang`, `jumlah`, `status`) VALUES
+(1, 1, 'ubil', 4, 0),
+(2, 1, 'tteess', 3, 0),
+(3, 1, 'lemari', 3, 0),
+(4, 1, 'testier', 12, 0),
+(6, 1, 'babs', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -43,6 +68,32 @@ INSERT INTO `hmenu` (`hid`, `nama_head`, `deskripsi`, `urutan`, `active`) VALUES
 (1, 'Dashboard', 'Dashboard', 1, 1),
 (5, 'Setting', 'Setting', 2, 1),
 (6, 'Transaksi', 'Transaksi', 3, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `list_barang`
+--
+
+CREATE TABLE `list_barang` (
+  `lbid` int(10) UNSIGNED NOT NULL,
+  `hari` varchar(100) DEFAULT NULL,
+  `tanggal` varchar(100) DEFAULT NULL,
+  `jam` varchar(50) DEFAULT NULL,
+  `menit` varchar(50) DEFAULT NULL,
+  `dari` text DEFAULT NULL,
+  `untuk` text DEFAULT NULL,
+  `penerima` varchar(100) DEFAULT NULL,
+  `pemberi` varchar(100) DEFAULT NULL,
+  `penyedia` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data untuk tabel `list_barang`
+--
+
+INSERT INTO `list_barang` (`lbid`, `hari`, `tanggal`, `jam`, `menit`, `dari`, `untuk`, `penerima`, `pemberi`, `penyedia`) VALUES
+(1, 'saad', 'dddd', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -95,7 +146,9 @@ CREATE TABLE `migrations` (
 INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`, `batch`) VALUES
 (1, '2023-04-19-070933', 'App\\Database\\Migrations\\Hmenu', 'default', 'App', 1681891624, 1),
 (2, '2023-04-19-080847', 'App\\Database\\Migrations\\Menu', 'default', 'App', 1681892047, 2),
-(3, '2023-04-19-081440', 'App\\Database\\Migrations\\Submenu', 'default', 'App', 1681892167, 3);
+(3, '2023-04-19-081440', 'App\\Database\\Migrations\\Submenu', 'default', 'App', 1681892167, 3),
+(4, '2023-05-20-010233', 'App\\Database\\Migrations\\ListBarang', 'default', 'App', 1684548192, 4),
+(5, '2023-05-20-010310', 'App\\Database\\Migrations\\DlistBarang', 'default', 'App', 1684548192, 4);
 
 -- --------------------------------------------------------
 
@@ -133,10 +186,22 @@ INSERT INTO `submenu` (`smid`, `mid`, `hid`, `nama_submenu`, `href`, `deskripsi`
 --
 
 --
+-- Indeks untuk tabel `detail_list_barang`
+--
+ALTER TABLE `detail_list_barang`
+  ADD PRIMARY KEY (`dbid`);
+
+--
 -- Indeks untuk tabel `hmenu`
 --
 ALTER TABLE `hmenu`
   ADD PRIMARY KEY (`hid`);
+
+--
+-- Indeks untuk tabel `list_barang`
+--
+ALTER TABLE `list_barang`
+  ADD PRIMARY KEY (`lbid`);
 
 --
 -- Indeks untuk tabel `menu`
@@ -161,10 +226,22 @@ ALTER TABLE `submenu`
 --
 
 --
+-- AUTO_INCREMENT untuk tabel `detail_list_barang`
+--
+ALTER TABLE `detail_list_barang`
+  MODIFY `dbid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT untuk tabel `hmenu`
 --
 ALTER TABLE `hmenu`
   MODIFY `hid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT untuk tabel `list_barang`
+--
+ALTER TABLE `list_barang`
+  MODIFY `lbid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `menu`
@@ -176,7 +253,7 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `submenu`
