@@ -124,7 +124,7 @@
                         allowOutsideClick: false,
                     });
 
-                    table.ajax.reload();
+                    window.localtion.reload();
 
                     $("#addsmenu").modal('hide');
                     $("#addSMenu")[0].reset();
@@ -229,7 +229,8 @@
                         allowOutsideClick: false,
                     });
 
-                    table.ajax.reload();
+                    window.location.reload();
+
 
                     $("#editsmenu").modal('hide');
                     $("#editSMenu")[0].reset();

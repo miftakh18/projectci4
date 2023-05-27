@@ -29,7 +29,7 @@ class CtrDlb extends BaseController
             $html .= '<td>' . $key + 1 . '</td>';
             $html .= '<td id="satu' . $detail['dbid'] . '">' . $detail['nama_barang'] . '</td>';
             $html .= '<td id="dua' . $detail['dbid'] . '">' . $detail['jumlah'] . '</td>';
-            $html .= '<td id="tiga' . $detail['dbid'] . '">
+            $html .= '<td id="tiga' . $detail['dbid'] . '" class="hd">
             <center><button type="button" id="deditlb" data-edit="' . $detail['dbid'] . '" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
             <button id="dhapuslb" type="button" data-idmid="' . $detail['mbid'] . '" data-hapus="' . $detail['dbid'] . '" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></center></td>';
             $html .= '</tr>';

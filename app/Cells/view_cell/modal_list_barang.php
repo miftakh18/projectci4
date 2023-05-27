@@ -3,7 +3,7 @@
         <div class="modal-content">
             <form id="frmlb">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Formulir List Barang</h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><?= (!empty($views)) ? 'View' : 'Formulir' ?> List Barang</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -16,7 +16,7 @@
                                 <?php $id = (!empty($this->getAIid('inventori', 'list_barang'))) ? $this->getAIid('inventori', 'list_barang') : '';
                                 ?>
                                 <input type="hidden" id="idEdit">
-                                <select name="harilb" id="harilb" class="custom-select">
+                                <select name="harilb" id="harilb" class="custom-select" <?php if (!empty($views)) echo 'disabled' ?>>
                                     <option value="">Pilih Hari</option>
                                     <?php
                                     $hari = ['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu', 'minggu'];
@@ -28,21 +28,21 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Tanggal</label>
-                                <input type="date" class="form-control" id="tgllb" name="tgllb">
+                                <input type="date" class="form-control" id="tgllb" name="tgllb" <?php if (!empty($views)) echo $views ?>>
                             </div>
 
 
                             <div class="form-group">
                                 <label for="inputEmail4">Jam</label>
                                 <div class="row">
-                                    <div class="col-4"><select name="jamlb" id="jamlb" class="custom-select">
+                                    <div class="col-4"><select name="jamlb" id="jamlb" class="custom-select" <?php if (!empty($views)) echo 'disabled' ?>>
                                             <option value="">--</option>
                                             <?php for ($i = 0; $i < 24; $i++) : ?>
                                                 <option value="<?= ($i < 10) ? '0' . $i : $i ?>"><?= ($i < 10) ? '0' . $i : $i ?></option>
                                             <?php endfor ?>
                                         </select></div>
                                     <div class=" col-4">
-                                        <select name="menitlb" id="menitlb" class="custom-select">
+                                        <select name="menitlb" id="menitlb" class="custom-select" <?php if (!empty($views)) echo 'disabled' ?>>
                                             <option value="">--</option>
                                             <?php for ($i = 0; $i < 60; $i++) : ?>
                                                 <option value="<?= ($i < 10) ? '0' . $i : $i ?>"><?= ($i < 10) ? '0' . $i : $i ?></option>
@@ -54,11 +54,11 @@
 
                             <div class="form-group">
                                 <label for="inputAddress2">Dari</label>
-                                <textarea name="darilb" id="darilb" cols="30" class="form-control"></textarea>
+                                <textarea name="darilb" id="darilb" cols="30" class="form-control" <?php if (!empty($views)) echo $views ?>></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="inputAddress2">Untuk</label>
-                                <textarea name="untuklb" id="untuklb" cols="30" class="form-control"></textarea>
+                                <textarea name="untuklb" id="untuklb" cols="30" class="form-control" <?php if (!empty($views)) echo $views ?>></textarea>
                             </div>
 
 
@@ -75,9 +75,9 @@
                                             <th>#</th>
                                             <th width="50%">Nama Barang</th>
                                             <th>Jumlah</th>
-                                            <th width="30%">Aksi</th>
+                                            <th width="30%" class="hd">Aksi</th>
                                         </tr>
-                                        <tr>
+                                        <tr <?php if (!empty($views)) echo 'hidden' ?>>
                                             <td>#</td>
                                             <td>
                                                 <input type="hidden" id="idEditD">
