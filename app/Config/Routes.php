@@ -60,7 +60,8 @@ $routes->group('smenu', static function ($routes) {
     $routes->get('menus/', 'CtrSubmenu::menus');
     $routes->post('update/(:any)', 'CtrSubmenu::update/$1');
 });
-$routes->resource('list_barang', ['controller' => 'CtrListBarang']);
+$routes->resource('list_barang', ['controller' => 'CtrDlb']);
+$routes->resource('listb', ['controller' => 'CtrListBarang']);
 // $routes->presenter('list_barang', ['controller' => 'CtrListBarang']);
 /*
  * --------------------------------------------------------------------

@@ -13,7 +13,7 @@ class ListBarang extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nama_barang', 'jumlah', 'penerima', 'pemberi', 'penyedia'];
+    protected $allowedFields    = ['hari', 'tanggal', 'jam', 'menit', 'dari', 'untuk', 'penerima', 'pemberi', 'penyedia'];
 
     // Dates
     protected $useTimestamps = false;

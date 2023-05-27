@@ -26,13 +26,14 @@
                 <form>
 
                 </form>
-                <table class="table table-striped " width="100%" id="smenus">
+                <table class="table table-striped " width="100%" id="l_bar">
                     <thead>
                         <th>No.</th>
                         <th>Tanggal</th>
                         <th>Dari</th>
                         <th>Untuk</th>
                         <th>Aksi</th>
+                    </thead>
                     <tbody>
                     </tbody>
                     </thead>
@@ -48,15 +49,38 @@
 <?= view_cell('PanggilPluginAll::pluginJS'); ?>
 <script>
     $(document).ready(function() {
-        // $(".dataTabs").dataTable({
-        //     "ordering": false,
-        //     "lengthMenu": [
-        //         [5, 10, 25, 50, -1],
-        //         [5, 10, 25, 50, "All"]
-        //     ],
-        //     "pageLength": '5'
-        // });
 
+        $("#l_bar").dataTable({
+
+            "ajax": {
+                url: '<?= base_url(); ?>listb/new',
+                type: 'GET',
+                dataSrc: 'data'
+            },
+            columns: [{
+                    'data': 'nomor'
+                },
+                {
+                    'data': 'tanggal'
+                },
+                {
+                    'data': 'dari'
+                },
+                {
+                    'data': 'untuk'
+                },
+                {
+                    'data': null,
+                    render: function(data, type, row) {
+                        btn = '<button type="button" id="editbtnlb" data-target="#modLb" data-toggle="modal" class="btn btn-sm shadow btn-primary mx-2" title="edit" data-idlb="' + data.lbid + '" ><i class="far fa-edit" ></i></button>';
+                        btn += '<button type="button" id="hapusbtnlb" class="btn btn-sm shadow btn-danger mx-2" title="delete" data-idlb="' + data.lbid + '" ><i class="fas fa-trash" ></i></button>';
+
+                        return btn;
+                    }
+                }
+            ]
+
+        });
         modalss();
 
     })
@@ -64,7 +88,10 @@
     function modalss() {
         string = <?= json_encode(view_cell('ModalListBarang::getAIid')) ?>;
         // alert(string);
+        $('#idEdit').val(string);
+        $("#idEditD").val(string);
     }
+
 
     function detailF(id) {
         $.ajax({
@@ -81,11 +108,13 @@
     }
 
     $(document).on("click", "#tambahLb", function() {
-        // modalss();
+        modalss();
 
         id = $('#idEdit').val();
         detailF(id);
 
+        $("#btnsv").html('Save');
+        $("#act").val('input');
     })
 
     $(document).on('click', '#lbDetail', function() {
@@ -146,6 +175,7 @@
 
     })
 
+
     $(document).on("click", "#dhapuslb", function() {
         id = $(this).data('hapus');
         mid = $(this).data('idmid');
@@ -158,5 +188,121 @@
             }
         })
     });
+    $(document).on("click", "#editbtnlb", function() {
+        $("#btnsv").html('Update');
+        $("#act").val('update');
+
+        id = $(this).data('idlb');
+        $('#idEdit').val(id);
+        $("#idEditD").val(id);
+        detailF(id);
+        $.ajax({
+            url: '<?= base_url(); ?>listb/' + id + '/edit',
+            type: 'GET',
+            dataType: 'json',
+            success: function(res) {
+                $("#harilb").val(res.data.hari);
+                $("#tgllb").val(res.data.tanggal);
+                $("#jamlb").val(res.data.jam);
+                $("#menitlb").val(res.data.menit);
+                $("#darilb").val(res.data.dari);
+                $("#untuklb").val(res.data.untuk);
+            }
+        })
+    })
+
+    $(document).on("submit", "#frmlb", function(e) {
+        e.preventDefault();
+        form = $(this).serialize();
+        console.log(form);
+        actionss = $("#act").val();
+        ids = $("#idEdit").val();
+        if (actionss == 'update') {
+            alamat = '<?= base_url(); ?>listb/' + ids;
+            types = 'PUT';
+
+        } else if (actionss == 'input') {
+            types = 'POST';
+            alamat = '<?= base_url(); ?>listb';
+        }
+        $.ajax({
+            url: alamat,
+            type: types,
+            data: form,
+            dataType: 'json',
+            success: function(res) {
+                if (res.icon == 'success') {
+                    Swal.fire({
+                        icon: res.icon,
+                        title: res.msg,
+                        focusConfirm: true,
+                        allowOutsideClick: false,
+                    });
+                    $("#modLb").modal('hide');
+                    window.location.reload();
+                    modalss();
+                } else {
+                    Swal.fire({
+                        icon: res.icon,
+                        title: res.msg,
+                        focusConfirm: true,
+                        allowOutsideClick: false,
+                    });
+                }
+            }
+        })
+
+
+
+    })
+
+    function memuat() {
+
+    }
+    $(document).on("click", "#hapusbtnlb", function() {
+        ids = $(this).data('idlb');
+        swal.fire({
+            title: 'Apakah Anda Ingin Menghapus?',
+            icon: 'question',
+            showCloseButton: true,
+            allowOutsideClick: false
+
+        }).then(function(hapus) {
+            if (hapus.isConfirmed) {
+                $.ajax({
+                    url: '<?= base_url(); ?>listb/' + ids,
+                    type: 'DELETE',
+                    dataType: 'json',
+                    success: function(res) {
+                        if (res.icn == 'success') {
+
+                            Swal.fire({
+                                icon: res.icon,
+                                title: res.msg,
+                                focusConfirm: true,
+                                allowOutsideClick: false,
+                            });
+                            $("#frmlb")[0].reset();
+
+                        } else {
+                            Swal.fire({
+                                icon: res.icon,
+                                title: res.msg,
+                                focusConfirm: true,
+                                allowOutsideClick: false,
+                            });
+                        }
+                    }
+                }).done(function() {
+                    window.location.reload();
+
+                })
+
+
+
+            }
+        });
+        // alert(id);
+    })
 </script>
 <?= $this->endSection(); ?>

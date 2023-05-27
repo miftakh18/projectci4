@@ -6,52 +6,52 @@ use App\Controllers\BaseController;
 use App\Models\ListBarang;
 use App\Models\DListBarang;
 
-class CtrListBarang extends BaseController
+class CtrDlb extends BaseController
 {
-
     private $ListB, $dListB;
+
     public function __construct()
     {
         $this->dListB  = new DListBarang();
         $this->ListB = new ListBarang();
     }
-
     public function index()
     {
+        //
     }
     public function show($id = null)
     {
+
+        $detail  = $this->dListB->where(['mbid' => $id])->findAll();
+        $html = '';
+        foreach ($detail as $key => $detail) {
+            $html .= '<tr>';
+            $html .= '<td>' . $key + 1 . '</td>';
+            $html .= '<td id="satu' . $detail['dbid'] . '">' . $detail['nama_barang'] . '</td>';
+            $html .= '<td id="dua' . $detail['dbid'] . '">' . $detail['jumlah'] . '</td>';
+            $html .= '<td id="tiga' . $detail['dbid'] . '">
+            <center><button type="button" id="deditlb" data-edit="' . $detail['dbid'] . '" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
+            <button id="dhapuslb" type="button" data-idmid="' . $detail['mbid'] . '" data-hapus="' . $detail['dbid'] . '" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></center></td>';
+            $html .= '</tr>';
+        }
+
+        return $this->response->setJSON(['html' => $html]);
     }
 
     public function new()
     {
-        $data  = $this->ListB->findAll();
-        foreach ($data as $key => $as) {
-            $data[$key]['nomor'] = $key + 1;
-            $data[$key]['tanggal'] = date('d-m-Y', strtotime($as['tanggal']));
-        }
-
-        return $this->response->setJSON(['data' => $data]);
+        $data['title'] = 'List Barang |Formulir';
+        return view('pages/p_lb/form', $data);
     }
     public function create()
     {
         $input  = $this->request->getPost();
-        $arr  =
-            [
-                'hari' => $input['harilb'],
-                'tanggal' => $input['tgllb'],
-                'jam' => $input['jamlb'],
-                'menit' => $input['menitlb'],
-                'dari' => $input['darilb'],
-                'untuk' => $input['untuklb']
 
-            ];
-
-        $sql =   $this->ListB->insert($arr);
+        $sql =   $this->dListB->insert($input);
         if ($sql == false) {
             $output["msg"] = "Data gagal Di Simpan";
             $output["icon"] = "error";
-            $output['indikasi'] = $this->ListB->errors();
+            $output['indikasi'] = $this->dListB->errors();
         } else {
             $output["msg"] = "Data berhasil di Simpan";
             $output["icon"] = "success";
@@ -64,7 +64,7 @@ class CtrListBarang extends BaseController
     public function edit($id = null)
     {
         if (!empty($id != null)) {
-            $edit = $this->ListB->find($id);
+            $edit = $this->dListB->find($id);
             // $edit = $this->hmenu->table('hmenu')->getWhere(['hid'=>$id]); //bisa menggunakan kondisi error nums_row >0
             if (isset($edit)) {
                 $output["data"] = $edit;
@@ -80,17 +80,11 @@ class CtrListBarang extends BaseController
     {
         $update  = $this->request->getRawInput();
 
-        $arr  =
-            [
-                'hari' => $update['harilb'],
-                'tanggal' => $update['tgllb'],
-                'jam' => $update['jamlb'],
-                'menit' => $update['menitlb'],
-                'dari' => $update['darilb'],
-                'untuk' => $update['untuklb']
-
-            ];
-        $sql =   $this->ListB->update($id, $arr);
+        $arr = [
+            'nama_barang' => $update['nama_barang'],
+            'jumlah' => $update['jumlah']
+        ];
+        $sql =   $this->dListB->update($id, $arr);
         if ($sql == false) {
             $output["msg"] = "Data gagal Di Update";
             $output["icon"] = "error";
@@ -108,28 +102,22 @@ class CtrListBarang extends BaseController
 
     public function delete($id = null)
     {
-        $sql1 =   $this->dListB->where(['mbid' => $id])->delete();
-        if ($sql1 == true) {
-
-            $sql =   $this->ListB->delete($id);
-            if ($sql == false) {
-                $output["msg"] = "Data gagal Di Delete";
-                $output["icon"] = "error";
-                $output['indikasi'] = $this->ListB->errors();
-                // return  $this->response->setStatusCode(422)
-                //     ->setJSON([$hmenu->errors()]);
-            } else {
-                $output["msg"] = "Data berhasil di Delete";
-                $output["icon"] = "success";
-                $output['indikasi'] = "";
-            }
-        } else {
+        $sql =   $this->dListB->delete($id);
+        if ($sql == false) {
             $output["msg"] = "Data gagal Di Delete";
             $output["icon"] = "error";
             $output['indikasi'] = $this->dListB->errors();
+            // return  $this->response->setStatusCode(422)
+            //     ->setJSON([$hmenu->errors()]);
+        } else {
+            $output["msg"] = "Data berhasil di Delete";
+            $output["icon"] = "success";
+            $output['indikasi'] = "";
         }
-
-
         return $this->response->setJSON($output);
+    }
+
+    public function createMaster()
+    {
     }
 }

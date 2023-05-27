@@ -1,9 +1,9 @@
 <div class="modal fade" id="modLb" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form>
+            <form id="frmlb">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Formulir List Barang</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -15,7 +15,7 @@
                                 <label for="inputEmail4">Hari</label>
                                 <?php $id = (!empty($this->getAIid('inventori', 'list_barang'))) ? $this->getAIid('inventori', 'list_barang') : '';
                                 ?>
-                                <input type="text" id="idEdit" value="<?= $id; ?>">
+                                <input type="hidden" id="idEdit">
                                 <select name="harilb" id="harilb" class="custom-select">
                                     <option value="">Pilih Hari</option>
                                     <?php
@@ -37,7 +37,7 @@
                                 <div class="row">
                                     <div class="col-4"><select name="jamlb" id="jamlb" class="custom-select">
                                             <option value="">--</option>
-                                            <?php for ($i = 0; $i <= 24; $i++) : ?>
+                                            <?php for ($i = 0; $i < 24; $i++) : ?>
                                                 <option value="<?= ($i < 10) ? '0' . $i : $i ?>"><?= ($i < 10) ? '0' . $i : $i ?></option>
                                             <?php endfor ?>
                                         </select></div>
@@ -80,7 +80,7 @@
                                         <tr>
                                             <td>#</td>
                                             <td>
-                                                <input type="hidden" id="idEditD" value="<?= $id; ?>">
+                                                <input type="hidden" id="idEditD">
                                                 <input type="text" name="nmdetail" class="form-control" id="nmdetail">
                                             </td>
                                             <td><input type="text" id="jmdetail" name="jmdetail" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></td>
@@ -103,7 +103,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <input type="hidden" id="act">
+                    <button type="submit" class="btn btn-primary" id="btnsv">Save</button>
                 </div>
             </form>
         </div>
