@@ -24,8 +24,6 @@
                         <th>Tanggal</th>
                         <th>Dari</th>
                         <th>Untuk</th>
-                        <th>Penerima</th>
-                        <th>Pemberi</th>
                         <th>Penyedia</th>
                         <th>Aksi</th>
                     </thead>
@@ -57,46 +55,24 @@
         }, {
             'data': null,
             render: function(data, type, row) {
-
-                if (data.penerima == null || data.penerima == '') {
-                    btn = '<button type="button" id="hapusbtnlb" class="btn btn-sm shadow btn-danger mx-2" title="delete" data-idlb="' + data.lbid + '" ><i class="fas fa-check-square"></i></button>';
-
+                if (data.penerima != null) {
+                    btn = (data.penyedia == null || data.penyedia == '') ? '<button type="button" id="apr" class="btn btn-sm  btn-info mx-2"  data-stts="penyedia" style="box-shadow: 5px 5px 5px lightblue" title="Apporve Penerima" data-idlb="' + data.lbid + '" ><i class="fas fa-check-square"></i></button>' : '<span class="badge badge-pill badge-success px-4 py-2"  style="box-shadow: 5px 5px 5px lightblue">Approved</span>';
                 } else {
-                    btn = '';
-
+                    btn = '<span class="badge badge-pill badge-warning p-2 " style="box-shadow: 5px 5px 5px lightblue">Pending approve pemberi</span> ';
                 }
+
 
                 return btn;
-            }
-        }, {
-            'data': null,
-            render: function(data, type, row) {
-
-                if (data.pemberi == null || data.pemberi == '') {
-                    btn = '<button type="button" id="hapusbtnlb" class="btn btn-sm shadow btn-danger mx-2" title="delete" data-idlb="' + data.lbid + '" ><i class="fas fa-check-square"></i></button>';
-
-                } else {
-                    btn = '';
-
-                }
-            }
-        }, {
-            'data': null,
-            render: function(data, type, row) {
-
-                if (data.penyedia == null || data.penyedia == '') {
-                    btn = '<button type="button" id="hapusbtnlb" class="btn btn-sm shadow btn-danger mx-2" title="delete" data-idlb="' + data.lbid + '" ><i class="fas fa-check-square"></i></button>';
-
-                } else {
-                    btn = '';
-
-                }
             }
         },
         {
             'data': null,
             render: function(data, type, row) {
-                btn = '<button type="button" id="showbtnlb" data-target="#modLb" data-toggle="modal" class="btn btn-sm shadow btn-primary mx-2" title="edit" data-idlb="' + data.lbid + '" ><i class="fas fa-eye"></i></button>';
+                if (data.pemberi != null && data.penerima != null && data.penyedia != null) {
+                    btn = '<a href="<?= base_url() ?>report/' + data.lbid + '/bm" id="" class="btn btn-warning btn-sm text-dark" style="box-shadow: 5px 5px 5px lightblue" target="_blank"><i class="fas fa-print"></i></a>';
+                } else {
+                    btn = '<button type="button" id="showbtnlb" data-target="#modLb" data-toggle="modal" class="btn btn-sm shadow btn-primary mx-2" title="edit" data-idlb="' + data.lbid + '" ><i class="fas fa-eye"></i></button>';
+                }
 
                 return btn;
             }
@@ -109,7 +85,7 @@
         $("#l_bar").dataTable({
 
             "ajax": {
-                url: '<?= base_url(); ?>listb/new',
+                url: '<?= base_url(); ?>api/approve',
                 type: 'GET',
                 dataSrc: 'data'
             },
@@ -151,9 +127,68 @@
                 $("#menitlb").val(res.data.menit);
                 $("#darilb").val(res.data.dari);
                 $("#untuklb").val(res.data.untuk);
-                $(".hd").html('');
+                $(".hd").remove();
             }
         })
+    })
+
+    $(document).on("click", "#apr", function() {
+        ids = $(this).data('idlb');
+        status = $(this).data('stts');
+        swal.fire({
+            title: 'Nama approve ' + status,
+            html: `<input type="text" id="nama" class="swal2-input" placeholder="Nama">
+  <input type="text" id="nomorhp" class="swal2-input" placeholder="0812" onkeypress="return event.charCode >= 48 && event.charCode <= 57">`,
+            focusConfirm: false,
+            preConfirm: () => {
+                const nama = Swal.getPopup().querySelector('#nama').value
+                const nohp = Swal.getPopup().querySelector('#nomorhp').value
+                if (!nama) {
+                    Swal.showValidationMessage(`Please enter Nama `)
+                } else if (!nohp) {
+                    Swal.showValidationMessage(`Please enter No Hp `)
+                } else if (!nama && !nohp) {
+                    Swal.showValidationMessage(`Please enter Data`)
+
+                }
+                return {
+                    nama: nama,
+                    nohp: nohp
+                }
+            },
+            icon: 'question',
+            showCloseButton: true,
+            allowOutsideClick: false
+
+        }).then(function(appr) {
+            if (appr.isConfirmed) {
+                $.ajax({
+                    url: '<?= base_url() ?>api/' + ids + '/' + appr.value.nama + '/' + appr.value.nohp + '/' + status + '/approve',
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function(res) {
+                        if (res.icon == 'success') {
+
+                            Swal.fire({
+                                icon: res.icon,
+                                title: res.msg,
+                                focusConfirm: true,
+                                allowOutsideClick: false,
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: res.icon,
+                                title: res.msg,
+                                focusConfirm: true,
+                                allowOutsideClick: false,
+                            });
+                        }
+                    }
+                }).done(function() {
+                    window.location.reload();
+                })
+            }
+        });
     })
 </script>
 <?= $this->endSection(); ?>

@@ -75,7 +75,7 @@
                                             <th>#</th>
                                             <th width="50%">Nama Barang</th>
                                             <th>Jumlah</th>
-                                            <th width="30%" class="hd">Aksi</th>
+                                            <th width="30%" class="hd" <?php if (!empty($views)) echo 'hidden' ?>>Aksi</th>
                                         </tr>
                                         <tr <?php if (!empty($views)) echo 'hidden' ?>>
                                             <td>#</td>
@@ -101,7 +101,9 @@
 
 
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" <?php if (!empty($views)) echo 'hidden' ?>>
+
+
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <input type="hidden" id="act">
                     <button type="submit" class="btn btn-primary" id="btnsv">Save</button>

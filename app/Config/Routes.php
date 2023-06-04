@@ -62,6 +62,18 @@ $routes->group('smenu', static function ($routes) {
 });
 $routes->resource('list_barang', ['controller' => 'CtrDlb']);
 $routes->resource('listb', ['controller' => 'CtrListBarang']);
+
+
+$routes->group('api', static function ($routes) {
+    $routes->post('(:any)/(:any)/(:any)/(:any)/approve', 'CtrListBarang::approve/$1/$2/$3/$4');
+    $routes->get('approve', 'CtrListBarang::showApprove');
+});
+
+$routes->group('report', static function ($routes) {
+    $routes->get('(:any)/bm', 'CtrReport::barang_masuk/$1');
+    // $routes->get('approve', 'CtrListBarang::showApprove');
+});
+
 // $routes->presenter('list_barang', ['controller' => 'CtrListBarang']);
 /*
  * --------------------------------------------------------------------
