@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 21 Bulan Mei 2023 pada 14.31
+-- Waktu pembuatan: 05 Jun 2023 pada 01.13
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.2.0
 
@@ -40,11 +40,10 @@ CREATE TABLE `detail_list_barang` (
 --
 
 INSERT INTO `detail_list_barang` (`dbid`, `mbid`, `nama_barang`, `jumlah`, `status`) VALUES
-(1, 1, 'ubil', 4, 0),
-(2, 1, 'tteess', 3, 0),
-(3, 1, 'lemari', 3, 0),
-(4, 1, 'testier', 12, 0),
-(6, 1, 'babs', 1, 0);
+(5, 17, 'lemari', 12, 0),
+(6, 17, 'kulkas', 1, 0),
+(12, 19, 'dasd', 12, 0),
+(13, 19, 'dasd', 12, 0);
 
 -- --------------------------------------------------------
 
@@ -83,17 +82,24 @@ CREATE TABLE `list_barang` (
   `menit` varchar(50) DEFAULT NULL,
   `dari` text DEFAULT NULL,
   `untuk` text DEFAULT NULL,
-  `penerima` varchar(100) DEFAULT NULL,
   `pemberi` varchar(100) DEFAULT NULL,
-  `penyedia` varchar(100) DEFAULT NULL
+  `penerima` varchar(100) DEFAULT NULL,
+  `penyedia` varchar(100) DEFAULT NULL,
+  `pemberi_waktu` varchar(225) DEFAULT NULL,
+  `penerima_waktu` varchar(225) DEFAULT NULL,
+  `penyedia_waktu` varchar(225) DEFAULT NULL,
+  `no_pemberi` varchar(12) DEFAULT NULL,
+  `no_penerima` varchar(12) DEFAULT NULL,
+  `no_penyedia` varchar(12) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data untuk tabel `list_barang`
 --
 
-INSERT INTO `list_barang` (`lbid`, `hari`, `tanggal`, `jam`, `menit`, `dari`, `untuk`, `penerima`, `pemberi`, `penyedia`) VALUES
-(1, 'saad', 'dddd', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `list_barang` (`lbid`, `hari`, `tanggal`, `jam`, `menit`, `dari`, `untuk`, `pemberi`, `penerima`, `penyedia`, `pemberi_waktu`, `penerima_waktu`, `penyedia_waktu`, `no_pemberi`, `no_penerima`, `no_penyedia`) VALUES
+(17, 'selasa', '2023-05-28', '12', '24', 'jl.sukabumi', 'jl.sukasaya', 'pemberi testing', 'gggg', 'penyedia', '2023-05-28 10:21:45', '2023-05-28 12:34:31', '2023-06-04 06:55:09', NULL, NULL, NULL),
+(19, 'jumat', '2023-06-06', '06', '07', 'saddd', 'asdddasd', 'pemberi', 'Joko Ardilah', 'penyedia', '2023-06-04 10:43:42', '2023-06-04 11:23:26', '2023-06-04 11:24:54', '081233121', '081297121121', '081234231123');
 
 -- --------------------------------------------------------
 
@@ -175,8 +181,8 @@ INSERT INTO `submenu` (`smid`, `mid`, `hid`, `nama_submenu`, `href`, `deskripsi`
 (1, 2, 5, 'Header Menu', '/hmenu', 'Setting > Menus > Header Menu', 1, 1),
 (2, 2, 5, 'Menu', '/menu', 'Setting > Menus > Menu', 2, 1),
 (3, 2, 5, 'Sub Menu', '/smenu', 'Setting > Menus > Sub Menu', 3, 1),
-(4, 4, 6, 'List Barang', '/terima_barang', 'Transaksi > Barang Masuk > List Barang', 1, 1),
-(5, 4, 6, 'Terima Barang Masuk', '/accept_barang_masuk', 'Transaksi > Barang Masuk > Accept Barang Masuk', 2, 1),
+(4, 4, 6, 'List Barang Di Terima', '/list_barang', 'Transaksi > Barang Masuk > List Barang', 1, 1),
+(5, 4, 6, 'approve penyedia', '/terima_barang', 'Transaksi > Barang Masuk > Accept Barang Masuk', 2, 1),
 (6, 3, 5, 'User', '/user', 'Setting > Akses > User', 1, 1),
 (7, 5, 6, 'Ceklist Barang Keluar', '/ceklist_barang_keluar', 'Transaksi > Barang Keluar > Ceklist Barang Keluar', 1, 1),
 (8, 5, 6, 'Serah Barang Keluar', '/serah_barang_keluar', 'Transaksi > Barang Keluar > Serah Barang', 2, 1);
@@ -229,7 +235,7 @@ ALTER TABLE `submenu`
 -- AUTO_INCREMENT untuk tabel `detail_list_barang`
 --
 ALTER TABLE `detail_list_barang`
-  MODIFY `dbid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `dbid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `hmenu`
@@ -241,7 +247,7 @@ ALTER TABLE `hmenu`
 -- AUTO_INCREMENT untuk tabel `list_barang`
 --
 ALTER TABLE `list_barang`
-  MODIFY `lbid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `lbid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT untuk tabel `menu`
