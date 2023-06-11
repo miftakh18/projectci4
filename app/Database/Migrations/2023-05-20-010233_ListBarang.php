@@ -14,14 +14,36 @@ class ListBarang extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'nama_barang' => [
+            'hari' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '100',
                 'null' => true
             ],
-            'jumlah' => [
-                'type' => 'INT',
-                'null' => true,
+            'tanggal' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '100',
+                'null' => true
+            ],
+            'jam' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '100',
+                'null' => true
+            ],
+            'menit' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '100',
+                'null' => true
+            ],
+
+            'dari' => [
+                'type'       => 'TEXT',
+                'constraint' => '100',
+                'null' => true
+            ],
+            'untuk' => [
+                'type'       => 'TEXT',
+                'constraint' => '100',
+                'null' => true
             ],
             'penerima' => [
                 'type'       => 'VARCHAR',
@@ -38,7 +60,36 @@ class ListBarang extends Migration
                 'constraint' => '100',
                 'null' => true
             ],
-
+            'penerima_waktu' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '100',
+                'null' => true
+            ],
+            'pemberi_waktu' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '100',
+                'null' => true
+            ],
+            'penyedia_waktu' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '100',
+                'null' => true
+            ],
+            'no_penerima' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '100',
+                'null' => true
+            ],
+            'no_pemberi' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '100',
+                'null' => true
+            ],
+            'no_penyedia' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '100',
+                'null' => true
+            ],
         ]);
         $this->forge->addKey('lbid', true);
         $this->forge->createTable('list_barang');

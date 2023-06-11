@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 05 Jun 2023 pada 01.13
+-- Waktu pembuatan: 11 Jun 2023 pada 10.55
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.2.0
 
@@ -43,7 +43,14 @@ INSERT INTO `detail_list_barang` (`dbid`, `mbid`, `nama_barang`, `jumlah`, `stat
 (5, 17, 'lemari', 12, 0),
 (6, 17, 'kulkas', 1, 0),
 (12, 19, 'dasd', 12, 0),
-(13, 19, 'dasd', 12, 0);
+(13, 19, 'dasd', 12, 0),
+(14, 20, 'Lemari', 12, 0),
+(15, 20, 'tanggal', 22, 0),
+(16, 21, 'asdasd', 12, 0),
+(17, 21, 'asdasd', 12, 0),
+(18, 21, 'asdasd', 12, 0),
+(19, 23, 'ljgjgj', 14, 0),
+(20, 23, 'ljgjgj', 12, 0);
 
 -- --------------------------------------------------------
 
@@ -90,16 +97,22 @@ CREATE TABLE `list_barang` (
   `penyedia_waktu` varchar(225) DEFAULT NULL,
   `no_pemberi` varchar(12) DEFAULT NULL,
   `no_penerima` varchar(12) DEFAULT NULL,
-  `no_penyedia` varchar(12) DEFAULT NULL
+  `no_penyedia` varchar(12) DEFAULT NULL,
+  `simpan` datetime DEFAULT NULL,
+  `keluar` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data untuk tabel `list_barang`
 --
 
-INSERT INTO `list_barang` (`lbid`, `hari`, `tanggal`, `jam`, `menit`, `dari`, `untuk`, `pemberi`, `penerima`, `penyedia`, `pemberi_waktu`, `penerima_waktu`, `penyedia_waktu`, `no_pemberi`, `no_penerima`, `no_penyedia`) VALUES
-(17, 'selasa', '2023-05-28', '12', '24', 'jl.sukabumi', 'jl.sukasaya', 'pemberi testing', 'gggg', 'penyedia', '2023-05-28 10:21:45', '2023-05-28 12:34:31', '2023-06-04 06:55:09', NULL, NULL, NULL),
-(19, 'jumat', '2023-06-06', '06', '07', 'saddd', 'asdddasd', 'pemberi', 'Joko Ardilah', 'penyedia', '2023-06-04 10:43:42', '2023-06-04 11:23:26', '2023-06-04 11:24:54', '081233121', '081297121121', '081234231123');
+INSERT INTO `list_barang` (`lbid`, `hari`, `tanggal`, `jam`, `menit`, `dari`, `untuk`, `pemberi`, `penerima`, `penyedia`, `pemberi_waktu`, `penerima_waktu`, `penyedia_waktu`, `no_pemberi`, `no_penerima`, `no_penyedia`, `simpan`, `keluar`) VALUES
+(17, 'selasa', '2023-05-28', '12', '24', 'jl.sukabumi', 'jl.sukasaya', 'pemberi testing', 'gggg', 'penyedia', '2023-05-28 10:21:45', '2023-05-28 12:34:31', '2023-06-04 06:55:09', NULL, NULL, NULL, NULL, NULL),
+(19, 'jumat', '2023-06-06', '06', '07', 'saddd', 'asdddasd', 'pemberi', 'Joko Ardilah', 'penyedia', '2023-06-04 10:43:42', '2023-06-04 11:23:26', '2023-06-04 11:24:54', '081233121', '081297121121', '081234231123', NULL, NULL),
+(20, 'kamis', '2023-06-14', '08', '07', 'dari ufuk timur', 'hingga ke ufuk barat ', 'joko', 'yanto', 'yanto', '2023-06-10 07:56:23', '2023-06-10 07:57:37', '2023-06-10 07:58:06', '081231231222', '08123212', '08321221221', NULL, NULL),
+(21, 'selasa', '2023-06-10', '07', '08', 'BDABSD', 'SDASD', 'pppp', 'eeee', 'hhhhh', '2023-06-10 08:08:22', '2023-06-10 08:08:35', '2023-06-10 08:11:10', '081231', '0812331', '97666', NULL, NULL),
+(22, 'selasa', '2023-06-10', '07', '08', 'BDABSD', 'SDASD', 'pppp', 'eeee', 'teasd', '2023-06-10 08:08:22', '2023-06-10 08:08:35', '2023-06-10 08:31:48', '081231', '0812331', '12300123', '2023-06-10 08:31:48', NULL),
+(23, 'senin', '2023-06-20', '07', '05', 'dggdgg', 'jjjj', 'jjjjjh', 'trtfff', 'asddfd', '2023-06-11 08:04:17', '2023-06-11 08:04:30', '2023-06-11 08:05:22', '0886555788', '087554567', '088643', '2023-06-11 08:05:22', NULL);
 
 -- --------------------------------------------------------
 
@@ -235,7 +248,7 @@ ALTER TABLE `submenu`
 -- AUTO_INCREMENT untuk tabel `detail_list_barang`
 --
 ALTER TABLE `detail_list_barang`
-  MODIFY `dbid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `dbid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT untuk tabel `hmenu`
@@ -247,7 +260,7 @@ ALTER TABLE `hmenu`
 -- AUTO_INCREMENT untuk tabel `list_barang`
 --
 ALTER TABLE `list_barang`
-  MODIFY `lbid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `lbid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT untuk tabel `menu`
@@ -259,7 +272,7 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `submenu`

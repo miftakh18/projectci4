@@ -14,6 +14,7 @@ class CtrListBarang extends BaseController
     {
         $this->dListB  = new DListBarang();
         $this->ListB = new ListBarang();
+        helper('date');
     }
 
     public function index()
@@ -25,7 +26,7 @@ class CtrListBarang extends BaseController
 
     public function new()
     {
-        $data  = $this->ListB->findAll();
+        $data  = $this->ListB->where('penyedia IS NULL')->findAll();
         foreach ($data as $key => $as) {
             $data[$key]['nomor'] = $key + 1;
             $data[$key]['tanggal'] = date('d-m-Y', strtotime($as['tanggal']));
@@ -169,8 +170,13 @@ class CtrListBarang extends BaseController
 
                 $time_f =   $status . '_waktu';
                 $nohp = 'no_' . $status;
-                $arr =    [$status => $approve, $nohp => $no_approve, $time_f => date('Y-m-d H:i:s')];
+
+
                 // var_dump($arr);            // exit;
+                if ($status == 'penyedia')  $simpan =  date('Y-m-d H:i:s');
+                else $simpan = null;
+                $arr =    [$status => $approve, $nohp => $no_approve, $time_f => date('Y-m-d H:i:s'), 'simpan' => $simpan];
+
                 $sql =  $this->ListB->update($id, $arr);
                 if ($sql == true) {
                     $output["msg"] = "Data berhasil di Approve" . ucfirst($status);
